@@ -8,7 +8,7 @@ This repo contains two versions of the scraper, showing progression from a basic
 
 ### `parser.py` — single page
 
-Collects data from the **first page only** (20 books).
+Collects data from the **first page only** (20 books) and saves it to `books.xlsx`.
 
 ```bash
 python parser.py
@@ -16,7 +16,7 @@ python parser.py
 
 ### `parser_all_pages.py` — full catalog
 
-Follows the "next page" links automatically and collects data from the **entire catalog** (~1000 books, ~50 pages), with a short delay between requests to avoid overloading the server.
+Follows the "next page" links automatically and collects data from the **entire catalog** (~1000 books, ~50 pages), with a short delay between requests to avoid overloading the server. Saves the result to `all_books.xlsx`.
 
 ```bash
 python parser_all_pages.py
@@ -29,7 +29,7 @@ Both scripts collect the same fields for every book:
 - **price** — price in GBP
 - **in_stock** — stock status
 
-The results are saved to a formatted Excel file (`books.xlsx`), with column widths auto-adjusted so text isn't cut off.
+Both output files are formatted Excel spreadsheets, with column widths auto-adjusted so text isn't cut off.
 
 ## Tech stack
 
@@ -56,3 +56,4 @@ pip install requests beautifulsoup4 pandas openpyxl
 - Add book rating and product page URL
 - Add command-line arguments (e.g. `--url`, `--pages`) to make the scraper reusable for other sites
 - Add a Flask/FastAPI wrapper to serve the data as an API
+  
