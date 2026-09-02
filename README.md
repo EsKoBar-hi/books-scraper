@@ -1,17 +1,39 @@
 # books-scraper
 
-A simple Python web scraper for the sandbox book catalog [books.toscrape.com](http://books.toscrape.com).
+Simple Python web scrapers for the sandbox book catalog [books.toscrape.com](http://books.toscrape.com).
 
-It collects the following data from the first page of the catalog:
+This repo contains two versions of the scraper, showing progression from a basic single-page scraper to a full multi-page one.
+
+## Scripts
+
+### `parser.py` — single page
+
+Collects data from the **first page only** (20 books).
+
+```bash
+python parser.py
+```
+
+### `parser_all_pages.py` — full catalog
+
+Follows the "next page" links automatically and collects data from the **entire catalog** (~1000 books, ~50 pages), with a short delay between requests to avoid overloading the server.
+
+```bash
+python parser_all_pages.py
+```
+
+## Data collected
+
+Both scripts collect the same fields for every book:
 - **title** — book title
 - **price** — price in GBP
 - **in_stock** — stock status
 
-The results are saved to a formatted Excel file (`books.xlsx`).
+The results are saved to a formatted Excel file (`books.xlsx`), with column widths auto-adjusted so text isn't cut off.
 
 ## Tech stack
 
-- `requests` — for fetching the web page
+- `requests` — for fetching web pages
 - `BeautifulSoup` (bs4) — for parsing HTML
 - `pandas` + `openpyxl` — for exporting data to Excel
 
@@ -20,14 +42,6 @@ The results are saved to a formatted Excel file (`books.xlsx`).
 ```bash
 pip install requests beautifulsoup4 pandas openpyxl
 ```
-
-## Usage
-
-```bash
-python parser.py
-```
-
-After running, a `books.xlsx` file will be created in the same folder, containing 20 books from the first page of the catalog.
 
 ## Example output
 
@@ -39,6 +53,6 @@ After running, a `books.xlsx` file will be created in the same folder, containin
 
 ## Possible improvements
 
-- Scrape all catalog pages, not just the first one (pagination)
 - Add book rating and product page URL
-- Add a delay between requests to be polite to the server
+- Add command-line arguments (e.g. `--url`, `--pages`) to make the scraper reusable for other sites
+- Add a Flask/FastAPI wrapper to serve the data as an API
